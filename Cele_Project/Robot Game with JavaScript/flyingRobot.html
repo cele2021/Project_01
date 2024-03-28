@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flying Robots</title>
+    <style>
+        .robot {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: #ffcc00;
+            border-radius: 50%;
+            transition: transform 1s linear;
+        }
+    </style>
+</head>
+<body>
+    <h1>Flying Robots</h1>
+    <h3>Robots Learning Capabilites by Celestine</h3>
+    <p>Enter the number of robots you want to generate and their flying speed:</p>
+    <input type="number" id="numRobotsInput" placeholder="Number of Robots">
+    <input type="number" id="speedInput" placeholder="Flying Speed (px/s)">
+    <button onclick="generateRobots()">Generate Robots</button>
+
+    <script>
+        function generateRobots() {
+            const numRobots = parseInt(document.getElementById("numRobotsInput").value);
+            const speed = parseFloat(document.getElementById("speedInput").value);
+
+            if (isNaN(numRobots) || isNaN(speed)) {
+                alert("Please enter valid input for the number of robots and flying speed.");
+                return;
+            }
+
+            const container = document.body;
+            for (let i = 0; i < numRobots; i++) {
+                const robot = document.createElement("div");
+                robot.classList.add("robot");
+                robot.style.left = Math.random() * (window.innerWidth - 50) + "px";
+                robot.style.top = Math.random() * (window.innerHeight - 50) + "px";
+                container.appendChild(robot);
+                animateRobot(robot, speed);
+            }
+        }
+
+        function animateRobot(robot, speed) {
+            const targetX = Math.random() * (window.innerWidth - 50);
+            const targetY = Math.random() * (window.innerHeight - 50);
+            const deltaX = targetX - robot.offsetLeft;
+            const deltaY = targetY - robot.offsetTop;
+            const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+            const duration = distance / speed * 1000;
+
+            robot.style.transitionDuration = duration + "ms";
+            robot.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+            
+            setTimeout(() => {
+                robot.style.left = targetX + "px";
+                robot.style.top = targetY + "px";
+                animateRobot(robot, speed);
+            }, duration);
+        }
+    </script>
+</body>
+</html>

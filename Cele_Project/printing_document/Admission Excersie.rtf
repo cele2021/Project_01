@@ -1,0 +1,216 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang2057{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil Calibri;}}
+{\colortbl ;\red0\green0\blue255;}
+{\*\generator Riched20 10.0.22621}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\f0\fs22\lang9 Admission exercises\par
+This file contains various exercises for the admission.\par
+\par
+Debugging exercises\par
+These exercises revolve around using the debugger to find bugs in code. They vary from using correct data types, implementation errors to errors found in real tutorials on the internet.\par
+\par
+scientific_programming.fruit_id.id_to_fruit(fruit_id, fruits)\par
+This method returns the fruit name by getting the string at a specific index of the set.\par
+\par
+Parameters\par
+fruit_id (int) \f1\endash  The id of the fruit to get\par
+\par
+fruits (Set[str]) \endash  The set of fruits to choose the id from\par
+\par
+Return type\par
+str\par
+\par
+Returns\par
+The string corrosponding to the index fruit_id\par
+\par
+This method is part of a series of debugging exercises. Each Python method of this series contains bug that needs to be found.\par
+\par
+1   It does not print the fruit at the correct index, why is the returned result wrong?\par
+2   How could this be fixed?\par
+This example demonstrates the issue: name1, name3 and name4 are expected to correspond to the strings at the indices 1, 3, and 4: \lquote orange\rquote , \lquote kiwi\rquote  and \lquote strawberry\rquote ..\par
+\par
+name1 = id_to_fruit(1, \{"apple", "orange", "melon", "kiwi", "strawberry"\})\par
+name3 = id_to_fruit(3, \{"apple", "orange", "melon", "kiwi", "strawberry"\})\par
+name4 = id_to_fruit(4, \{"apple", "orange", "melon", "kiwi", "strawberry"\})\par
+scientific_programming.swap.swap(coords)\par
+This method will flip the x and y coordinates in the coords array.\par
+\par
+Parameters\par
+coords (ndarray) \endash\par
+\par
+A numpy array of bounding box coordinates with shape [n,5] in format:\par
+\par
+[[x11, y11, x12, y12, classid1],\par
+ [x21, y21, x22, y22, classid2],\par
+ ...\par
+ [xn1, yn1, xn2, yn2, classid3]]\par
+Returns\par
+The new numpy array where the x and y coordinates are flipped.\par
+\par
+This method is part of a series of debugging exercises. Each Python method of this series contains bug that needs to be found.\par
+\par
+1   Can you spot the obvious error?\par
+2   After fixing the obvious error it is still wrong, how can this be fixed?\par
+import numpy as np\par
+coords = np.array([[10, 5, 15, 6, 0],\par
+                   [11, 3, 13, 6, 0],\par
+                   [5, 3, 13, 6, 1],\par
+                   [4, 4, 13, 6, 1],\par
+                   [6, 5, 13, 16, 1]])\par
+swapped_coords = swap(coords)\par
+The example demonstrates the issue. The returned swapped_coords are expected to have swapped x and y coordinates in each of the rows.\par
+\par
+scientific_programming.plot_data.plot_data(csv_file_path)\par
+This code plots the precision-recall curve based on data from a .csv file, where precision is on the x-axis and recall is on the y-axis. It it not so important right now what precision and recall means.\par
+\par
+Parameters\par
+csv_file_path (str) \endash  The CSV file containing the data to plot.\par
+\par
+This method is part of a series of debugging exercises. Each Python method of this series contains bug that needs to be found.\par
+\par
+1   For some reason the plot is not showing correctly, can you find out what is going wrong?\par
+2   How could this be fixed?\par
+This example demonstrates the issue. It first generates some data in a csv file format and the plots it using the plot_data method. If you manually check the coordinates and then check the plot, they do not correspond.\par
+\par
+f = open("data_file.csv", "w")\par
+w = csv.writer(f)\par
+_ = w.writerow(["precision", "recall"])\par
+w.writerows([[0.013,0.951],\par
+             [0.376,0.851],\par
+             [0.441,0.839],\par
+             [0.570,0.758],\par
+             [0.635,0.674],\par
+             [0.721,0.604],\par
+             [0.837,0.531],\par
+             [0.860,0.453],\par
+             [0.962,0.348],\par
+             [0.982,0.273],\par
+             [1.0,0.0]])\par
+f.close()\par
+plot_data('data_file.csv')\par
+scientific_programming.gan.train_gan(batch_size=32, num_epochs=100, device='cpu')\par
+The method trains a Generative Adversarial Network and is based on: {{\field{\*\fldinst{HYPERLINK https://realpython.com/generative-adversarial-networks/ }}{\fldrslt{https://realpython.com/generative-adversarial-networks/\ul0\cf0}}}}\f1\fs22\par
+\par
+The Generator network tries to generate convincing images of handwritten digits. The Discriminator needs to detect if the image was created by the Generater or if the image is a real image from a known dataset (MNIST). If both the Generator and the Discriminator are optimized, the Generator is able to create images that are difficult to distinguish from real images. This is goal of a GAN.\par
+\par
+This code produces the expected results at first attempt at about 50 epochs.\par
+\par
+Parameters\par
+batch_size (int) \endash  The number of images to train in one epoch.\par
+\par
+num_epochs (int) \endash  The number of epochs to train the gan.\par
+\par
+device (str) \endash  The computing device to use. If CUDA is installed and working then cuda:0 is chosen otherwise \lquote cpu\rquote  is chosen. Note: Training a GAN on the CPU is very slow.\par
+\par
+This method is part of a series of debugging exercises. Each Python method of this series contains bug that needs to be found.\par
+\par
+It contains at least two bugs: one structural bug and one cosmetic bug. Both bugs are from the original tutorial.\par
+\par
+1   Changing the batch_size from 32 to 64 triggers the structural bug.\par
+2   Can you also spot the cosmetic bug?\par
+Note: to fix this bug a thorough understanding of GANs is not necessary.\par
+Change the batch size to 64 to trigger the bug with message: ValueError: \ldblquote Using a target size (torch.Size([128, 1])) that is different to the input size (torch.Size([96, 1])) is deprecated. Please ensure they have the same size.\rdblquote\par
+\par
+train_gan(batch_size=32, num_epochs=100)\par
+scientific_programming.load_tests(loader, tests, ignore)\par
+ChatGPT\par
+Let's go through each debugging exercise one by one and address the issues:\par
+\par
+Debugging Exercise 1: scientific_programming.fruit_id.id_to_fruit(fruit_id, fruits)\par
+Issue:\par
+The method id_to_fruit does not print the fruit at the correct index.\par
+\par
+Solution:\par
+The issue might be due to the fact that sets are unordered collections, so the order of elements in the set is not guaranteed to be consistent across different runs. Therefore, using a set for fruits might not be appropriate if we want to retrieve elements based on their index.\par
+\par
+Proposed Fix:\par
+Change the data structure from set to list or tuple, which maintain the order of elements.\par
+\par
+python\par
+Copy code\par
+def id_to_fruit(fruit_id, fruits):\par
+    # Convert set to list or tuple\par
+    fruits_list = list(fruits)\par
+    return fruits_list[fruit_id]\par
+Debugging Exercise 2: scientific_programming.swap.swap(coords)\par
+Issue:\par
+The swap function does not correctly flip the x and y coordinates in the coords array.\par
+\par
+Solution:\par
+The function incorrectly flips all elements in the array, including the class ID, which should remain unchanged.\par
+\par
+Proposed Fix:\par
+We need to only swap the first two elements (x and y coordinates) in each row, leaving the class ID untouched.\par
+\par
+python\par
+Copy code\par
+import numpy as np\par
+\par
+def swap(coords):\par
+    # Swap x and y coordinates\par
+    swapped_coords = coords.copy()\par
+    swapped_coords[:, [0, 1]] = swapped_coords[:, [1, 0]]\par
+    return swapped_coords\par
+Debugging Exercise 3: scientific_programming.plot_data.plot_data(csv_file_path)\par
+Issue:\par
+The plot generated by plot_data does not show correctly.\par
+\par
+Solution:\par
+There might be an issue with the data reading or plotting process.\par
+\par
+Proposed Fix:\par
+Ensure that the data is correctly read from the CSV file and that the plotting function interprets the data correctly.\par
+\par
+python\par
+Copy code\par
+import csv\par
+import matplotlib.pyplot as plt\par
+\par
+def plot_data(csv_file_path):\par
+    # Read data from CSV file\par
+    precision = []\par
+    recall = []\par
+    with open(csv_file_path, 'r') as f:\par
+        reader = csv.reader(f)\par
+        next(reader)  # Skip header\par
+        for row in reader:\par
+            precision.append(float(row[0]))\par
+            recall.append(float(row[1]))\par
+    \par
+    # Plot precision-recall curve\par
+    plt.plot(precision, recall)\par
+    plt.xlabel('Precision')\par
+    plt.ylabel('Recall')\par
+    plt.title('Precision-Recall Curve')\par
+    plt.show()\par
+Debugging Exercise 4: scientific_programming.gan.train_gan(batch_size=32, num_epochs=100, device='cpu')\par
+Issue:\par
+Changing the batch_size parameter from 32 to 64 triggers an error.\par
+\par
+Solution:\par
+There may be a mismatch between the batch size used in the model and the batch size of the input data.\par
+\par
+Proposed Fix:\par
+Ensure that the batch size used during training matches the batch size of the input data.\par
+\par
+python\par
+Copy code\par
+train_gan(batch_size=64, num_epochs=100)\par
+Additionally, let's address any cosmetic bug that might be present in the code, such as inconsistent formatting or naming conventions.\par
+\par
+Debugging Exercise 5: scientific_programming.load_tests(loader, tests, ignore)\par
+Issue:\par
+No specific issue mentioned.\par
+\par
+Solution:\par
+If there's no specific issue mentioned, we can assume this exercise involves implementing a function to load tests for a testing framework.\par
+\par
+Proposed Implementation:\par
+Implement a function to load tests for the testing framework. The implementation would depend on the specific requirements and structure of the testing framework being used.\par
+\par
+python\par
+Copy code\par
+def load_tests(loader, tests, ignore):\par
+    # Implement loading of tests for the testing framework\par
+    pass\par
+These proposed fixes address the identified issues in each debugging exercise. Make sure to test the fixed code to ensure it functions correctly.\f0\par
+}
+ 

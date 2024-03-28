@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommendation System By Celestine Chukwuka Agashi</title>
+</head>
+<body>
+    <h1>Recommendation System </h1>
+    <h4>By Celestine Chukwuka Agashi</h4>
+    <p>Enter an item ID and the number of recommendations:</p>
+    <input type="text" id="itemIdInput" placeholder="Item ID">
+    <input type="text" id="numRecsInput" placeholder="Number of Recommendations">
+    <button onclick="getRecommendations()">Get Recommendations</button>
+    <div id="recommendations"></div>
+
+    <script>
+        // Sample data representing items and their features
+        const items = [
+            { id: 1, name: "Item 1", features: [0.1, 0.2, 0.5, 0.8] },
+            { id: 2, name: "Item 2", features: [0.2, 0.4, 0.6, 0.9] },
+            { id: 3, name: "Item 3", features: [0.3, 0.6, 0.7, 0.10] },
+            { id: 4, name: "Item 4", features: [0.4, 0.8, 0.8, 0.11] },
+            { id: 5, name: "Item 1", features: [0.5, 0.10, 0.9, 0.12] },
+            { id: 6, name: "Item 2", features: [0.6, 0.12, 0.15, 0.13] },
+            { id: 7, name: "Item 3", features: [0.7, 0.14, 0.16, 0.14] }
+        ];
+
+        // Function to calculate cosine similarity between two vectors
+        function cosineSimilarity(vec1, vec2) {
+            if (vec1.length !== vec2.length) {
+                throw new Error("Vectors must have the same length");
+            }
+            
+            let dotProduct = 0;
+            let mag1 = 0;
+            let mag2 = 0;
+            
+            for (let i = 0; i < vec1.length; i++) {
+                dotProduct += vec1[i] * vec2[i];
+                mag1 += vec1[i] ** 2;
+                mag2 += vec2[i] ** 2;
+            }
+            
+            mag1 = Math.sqrt(mag1);
+            mag2 = Math.sqrt(mag2);
+            
+            return dotProduct / (mag1 * mag2);
+        }
+
+        // Function to get recommendations based on user input
+        function getRecommendations() {
+            const itemIdInput = document.getElementById("itemIdInput").value;
+            const numRecsInput = document.getElementById("numRecsInput").value;
+
+            const itemId = parseInt(itemIdInput);
+            const numRecommendations = parseInt(numRecsInput);
+
+            if (isNaN(itemId) || isNaN(numRecommendations)) {
+                alert("Please enter valid input for Item ID and Number of Recommendations.");
+                return;
+            }
+
+            const recommendationsDiv = document.getElementById("recommendations");
+            recommendationsDiv.innerHTML = ""; // Clear previous recommendations
+
+            const recommendations = calculateRecommendations(itemId, numRecommendations);
+            if (recommendations.length === 0) {
+                recommendationsDiv.innerHTML = "<p>No recommendations found.</p>";
+            } else {
+                recommendationsDiv.innerHTML = "<h2>Recommendations:</h2>";
+                recommendations.forEach(rec => {
+                    const item = items.find(item => item.id === rec.id);
+                    recommendationsDiv.innerHTML += `<p>${item.name} (Similarity: ${rec.similarity.toFixed(2)})</p>`;
+                });
+            }
+        }
+
+        // Function to calculate recommendations for a given item
+        function calculateRecommendations(itemId, numRecommendations) {
+            const item = items.find(item => item.id === itemId);
+            if (!item) {
+                throw new Error("Item not found");
+            }
+            
+            const similarities = [];
+            
+            for (const otherItem of items) {
+                if (otherItem.id !== itemId) {
+                    const similarity = cosineSimilarity(item.features, otherItem.features);
+                    similarities.push({ id: otherItem.id, similarity });
+                }
+            }
+            
+            // Sort items by similarity and get top recommendations
+            similarities.sort((a, b) => b.similarity - a.similarity);
+            const recommendations = similarities.slice(0, numRecommendations);
+            
+            return recommendations;
+        }
+    </script>
+</body>
+</html>

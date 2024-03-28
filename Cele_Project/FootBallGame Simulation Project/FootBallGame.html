@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        h1 {
+            margin-top: 20px;
+        }
+        .teams {
+            margin-top: 20px;
+        }
+        select {
+            font-size: 16px;
+            padding: 5px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #field {
+            margin-top: 20px;
+            position: relative;
+            width: 600px;
+            height: 300px;
+            background-image: url('soccer_field.png');
+            background-size: cover;
+        }
+        .player {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 14px;
+            color: #fff;
+        }
+        .goalkeeper {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            bottom: 20px;
+            animation: jump 0.5s infinite alternate;
+        }
+        .goalpost {
+            position: absolute;
+            background-color: #000;
+            width: 5px;
+            height: 100px;
+        }
+        @keyframes jump {
+            from { bottom: 20px; }
+            to { bottom: 40px; }
+        }
+    </style>
+</head>
+<body>
+    <h1>Football Game</h1>
+    <h3>FootBall Online Game under Development by Celestine</h3>
+    <div class="teams">
+        <label for="team1">Select Team 1:</label>
+        <select id="team1">
+            <option value="Real Madrid">Real Madrid</option>
+            <option value="Barcelona">Barcelona</option>
+            <option value="Liverpool">Liverpool</option>
+            <option value="Manchester City">Manchester City</option>
+            <option value="Bayern Munich">Bayern Munich</option>
+            <option value="Paris Saint-Germain">Paris Saint-Germain</option>
+        </select>
+        <br>
+        <label for="team2">Select Team 2:</label>
+        <select id="team2">
+            <option value="Real Madrid">Real Madrid</option>
+            <option value="Barcelona">Barcelona</option>
+            <option value="Liverpool">Liverpool</option>
+            <option value="Manchester City">Manchester City</option>
+            <option value="Bayern Munich">Bayern Munich</option>
+            <option value="Paris Saint-Germain">Paris Saint-Germain</option>
+        </select>
+        <br>
+        <button onclick="setupGame()">Start Match</button>
+    </div>
+
+    <div id="field">
+        <div class="goalpost" style="left: 10px;"></div>
+        <div class="goalpost" style="right: 10px;"></div>
+        <img id="goalkeeper1" class="goalkeeper" src="k1.png" style="left: 120px;">
+        <img id="goalkeeper2" class="goalkeeper" src="k2.png" style="right: 120px;">
+    </div>
+
+    <script>
+        function setupGame() {
+            const team1 = document.getElementById("team1").value;
+            const team2 = document.getElementById("team2").value;
+
+            document.getElementById("field").innerHTML = '';
+
+            const numPlayers = 11;
+            for (let i = 0; i < numPlayers; i++) {
+                const player1 = document.createElement("img");
+                player1.className = "player";
+                player1.src = "cr7.png";
+                player1.style.left = `${Math.random() * 600}px`;
+                player1.style.top = `${Math.random() * 400}px`;
+                document.getElementById("field").appendChild(player1);
+
+                const player2 = document.createElement("img");
+                player2.className = "player";
+                player2.src = "m.png";
+                player2.style.left = `${Math.random() * 600}px`;
+                player2.style.top = `${Math.random() * 400}px`;
+                document.getElementById("field").appendChild(player2);
+            }
+        }
+    </script>
+</body>
+</html>

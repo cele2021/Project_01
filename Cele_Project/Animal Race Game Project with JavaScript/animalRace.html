@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animal Race</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        h1 {
+            margin-top: 20px;
+        }
+        #raceTrack {
+            margin-top: 20px;
+            position: relative;
+            width: 600px;
+            height: 150px;
+            border: 1px solid #000;
+        }
+        .animal {
+            position: absolute;
+            bottom: 0;
+            width: 100px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Animal Race</h1>
+    <div id="raceTrack">
+        <img id="Goat" class="animal" src="goat.gif" style="left: 0;">
+        <img id="Dog" class="animal" src="dog.gif" style="left: 150px;">
+        <img id="Horse" class="animal" src="horse.gif" style="left: 300px;">
+        <img id="Lion" class="animal" src="lion.gif" style="left: 450px;">
+    </div>
+    <button onclick="startRace()">Start Race</button>
+
+    <script>
+        function startRace() {
+            const animals = document.querySelectorAll('.animal');
+            const finishLine = document.getElementById('raceTrack').offsetWidth - 100;
+
+            animals.forEach(animal => {
+                let distance = 0;
+                const speed = Math.random() * 10 + 5; // Random speed between 5 and 15
+
+                const race = setInterval(() => {
+                    distance += speed;
+                    animal.style.left = `${distance}px`;
+
+                    if (distance >= finishLine) {
+                        clearInterval(race);
+                        alert(`${animal.id} wins the race!`);
+                    }
+                }, 100);
+            });
+        }
+    </script>
+</body>
+</html>
